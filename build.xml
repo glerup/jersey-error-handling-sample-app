@@ -1,0 +1,39 @@
+<?xml version="1.0" ?> 
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="Jersey Error Handling Sample App" default="war">
+
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist" />
+	</target>
+
+    <target name="resolve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve type="jar" pattern="WebContent/WEB-INF/lib/[artifact]-[revision].[ext]" />
+    </target>
+
+	<target name="compile" depends="init, resolve">
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/SampleApp.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>
+		</war>
+	</target>
+	
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+		<delete dir="WebContent/WEB-INF/lib" />
+	</target>
+	
+</project>

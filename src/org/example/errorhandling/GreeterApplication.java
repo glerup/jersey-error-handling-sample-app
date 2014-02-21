@@ -12,6 +12,7 @@ public class GreeterApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		HashSet<Class<?>> classes = new HashSet<>();
 		classes.add(Greeter.class);
+		classes.add(GreeterInitializationExceptionMapper.class);
 		classes.add(JacksonJsonProvider.class);
 		return classes;
 	}
